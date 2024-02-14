@@ -32,7 +32,7 @@ export default function Register() {
           action={registerUser}
         >
           <div className=" mb-3">
-            <label htmlFor="" className=" block">
+            <label htmlFor="" className=" block text-gray-50">
               Full Name{" "}
             </label>
             <input
@@ -43,7 +43,7 @@ export default function Register() {
             />
           </div>
           <div className=" mb-3">
-            <label htmlFor="" className=" block">
+            <label htmlFor="" className=" block text-gray-50">
               Email{" "}
             </label>
             <input
@@ -54,7 +54,7 @@ export default function Register() {
             />
           </div>
           <div className=" mb-3">
-            <label htmlFor="password" className=" block">
+            <label htmlFor="password" className=" block text-gray-50">
               Password{" "}
             </label>
             <input

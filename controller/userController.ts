@@ -35,7 +35,7 @@ export async function updateIsOnine(user: string, value: boolean) {
       res.isOnline = value;
       await res.save();
     }
-    console.log(res);
+    // console.log(res, "updateisOnline");
     return "status updated";
   } catch (error: any) {
     return error.message;

@@ -43,7 +43,7 @@ export default function Login() {
           action={loginUser}
         >
           <div className=" mb-3">
-            <label htmlFor="" className=" block">
+            <label htmlFor="" className=" block text-gray-50">
               Email{" "}
             </label>
             <input
@@ -54,7 +54,7 @@ export default function Login() {
             />
           </div>
           <div className=" mb-3">
-            <label htmlFor="password" className=" block">
+            <label htmlFor="password" className=" block text-gray-50">
               Password{" "}
             </label>
             <input

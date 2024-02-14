@@ -1,77 +1,100 @@
-const http = require("http");
-const { Server } = require("socket.io");
-const cors = require("cors");
-const httpServer = http.createServer();
+// const path = require("path");
+// const express = require("express");
+// const { Server } = require("socket.io");
+// const cors = require("cors");
 
-const io = new Server(httpServer, {
-  cors: {
-    origin: "http://localhost:3000",
-    credentials: true,
-  },
-});
+// const app = express();
+// app.use(express.json());
+// // .next\server\app\index.html
 
-function getRoomId(user1, user2) {
-  const id = [user1, user2].sort();
-  return id[0] + id[1];
-}
+// console.log(__dirname, path.resolve());
 
-io.use((socket, next) => {
-  const user1 = socket.handshake.auth.user;
-  console.log(user1);
-  if (!user1) {
-    console.log("invalid username");
-    return next(new Error("invalid username"));
-  }
-  socket.user1 = user1;
-  next();
-});
+// app.use(express.static(path.join(__dirname, "../.next")));
 
-let users = [];
+// app.get("/", (req, res) => {
+//   res.sendFile(
+//     path.join(__dirname, "..", ".next", "server", "app", "index.html")
+//   );
+// });
+// app.get("/login", (req, res) => {
+//   res.sendFile(
+//     path.join(__dirname, "..", ".next", "server", "app", "login.html")
+//   );
+// });
+// app.get("/register", (req, res) => {
+//   res.sendFile(
+//     path.join(__dirname, "..", ".next", "server", "app", "register.html")
+//   );
+// });
 
-io.on("connection", (socket) => {
-  // for (let [id, socket] of io.of("/").sockets) {
-  users.push({
-    socketId: socket.id,
-    username: socket.user1,
-  });
+// const PORT = process.env.PORT || 3001;
+// const server = app.listen(PORT, () => {
+//   console.log(`Socket.io server is running on port ${PORT}`);
+// });
 
-  io.emit("onlineusers", users, "online");
-  console.log(users);
-  console.log("a user connected", socket.id);
+// const io = new Server(server, {
+//   cors: {
+//     origin: "http://localhost:3000",
+//   },
+// });
 
-  // socket.on("login", (user) => {
-  //   if (user !== "") onlineUsers[socket.id] = user;
-  //   console.log(onlineUsers);
-  //   socket.broadcast.emit("onlineusers", onlineUsers);
-  // });
+// function getRoomId(user1, user2) {
+//   const id = [user1, user2].sort();
+//   return id[0] + id[1];
+// }
 
-  socket.on("join", (user1, user2) => {
-    const roomId = getRoomId(user1, user2);
-    socket.join(roomId);
+// io.use((socket, next) => {
+//   const user1 = socket.handshake.auth.user;
+//   console.log(user1);
+//   if (!user1) {
+//     console.log("invalid username");
+//     return next(new Error("invalid username"));
+//   }
+//   socket.user1 = user1;
+//   next();
+// });
 
-    socket.to(roomId).emit("join", "user joined", roomId);
-  });
+// let users = [];
 
-  socket.on("send_message", (msg, user1, user2) => {
-    // console.log("msg", msg);
-    const roomId = getRoomId(user1, user2);
-    socket.to(roomId).emit("receive_msg", msg, user1, user2);
-  });
+// io.on("connection", (socket) => {
+//   // for (let [id, socket] of io.of("/").sockets) {
+//   users.push({
+//     socketId: socket.id,
+//     username: socket.user1,
+//   });
 
-  socket.on("typing", (user1, user2) => {
-    const roomId = getRoomId(user1, user2);
-    socket.to(roomId).emit("typing", user1);
-  });
+//   io.emit("onlineusers", users, "online");
+//   console.log(users);
+//   console.log("a user connected", socket.id);
 
-  socket.on("disconnect", () => {
-    console.log("user disconnected", socket.id);
-    users = users.filter((user) => user.socketId !== socket.id);
-    console.log(users);
-    io.emit("onlineusers", users, "offline");
-  });
-});
+//   // socket.on("login", (user) => {
+//   //   if (user !== "") onlineUsers[socket.id] = user;
+//   //   console.log(onlineUsers);
+//   //   socket.broadcast.emit("onlineusers", onlineUsers);
+//   // });
 
-const PORT = process.env.PORT || 3001;
-httpServer.listen(PORT, () => {
-  console.log(`Socket.io server is running on port ${PORT}`);
-});
+//   socket.on("join", (user1, user2) => {
+//     const roomId = getRoomId(user1, user2);
+//     socket.join(roomId);
+
+//     socket.to(roomId).emit("join", "user joined", roomId);
+//   });
+
+//   socket.on("send_message", (msg, user1, user2) => {
+//     // console.log("msg", msg);
+//     const roomId = getRoomId(user1, user2);
+//     socket.to(roomId).emit("receive_msg", msg, user1, user2);
+//   });
+
+//   socket.on("typing", (user1, user2) => {
+//     const roomId = getRoomId(user1, user2);
+//     socket.to(roomId).emit("typing", user1);
+//   });
+
+//   socket.on("disconnect", () => {
+//     console.log("user disconnected", socket.id);
+//     users = users.filter((user) => user.socketId !== socket.id);
+//     console.log(users);
+//     io.emit("onlineusers", users, "offline");
+//   });
+// });
