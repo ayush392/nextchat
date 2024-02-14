@@ -4,10 +4,10 @@ const next = require("next");
 const { Server } = require("socket.io");
 
 const dev = process.env.NODE_ENV !== "production";
-const hostname = "localhost";
+// const hostname = "localhost";
 const PORT = process.env.PORT || 3000;
 // when using middleware `hostname` and `port` must be provided below
-const app = next({ dev, hostname, PORT });
+const app = next({ dev });
 const handle = app.getRequestHandler();
 
 app.prepare().then(() => {
@@ -105,7 +105,7 @@ app.prepare().then(() => {
 
   httpServer.listen(PORT, () => {
     console.log(
-      `> Ready on http://${hostname}:${PORT} in ${process.env.NODE_ENV} mode`
+      `> Ready on ${PORT} in ${process.env.NODE_ENV} mode`
     );
     // console.log("server started");
   });
